@@ -1,0 +1,686 @@
+[
+  {
+    "roll_min": 2,
+    "roll_max": 2,
+    "room_id": "room_2",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [
+      {
+        "kind": "chest",
+        "rarity": "Legendary",
+        "quantity": 1
+      }
+    ],
+    "starmetal": null,
+    "boss_guarded": true,
+    "room_feature": null
+  },
+  {
+    "roll_min": 3,
+    "roll_max": 3,
+    "room_id": "room_3",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [
+      {
+        "kind": "chest",
+        "rarity": "Legendary",
+        "quantity": 1
+      }
+    ],
+    "starmetal": null,
+    "boss_guarded": true,
+    "room_feature": null
+  },
+  {
+    "roll_min": 4,
+    "roll_max": 4,
+    "room_id": "room_4",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [
+      {
+        "kind": "chest",
+        "rarity": "Legendary",
+        "quantity": 1
+      }
+    ],
+    "starmetal": null,
+    "boss_guarded": true,
+    "room_feature": null
+  },
+  {
+    "roll_min": 5,
+    "roll_max": 5,
+    "room_id": "room_5",
+    "name": "Large Room",
+    "layout": "Large Room",
+    "outward_exits": 1,
+    "beasts": [
+      {
+        "count": "1d2",
+        "rank": "Tree-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 6,
+    "roll_max": 6,
+    "room_id": "room_6",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [],
+    "starmetal": "4d6xRL",
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 7,
+    "roll_max": 7,
+    "room_id": "room_7",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 8,
+    "roll_max": 8,
+    "room_id": "room_8",
+    "name": "Large Room",
+    "layout": "Large Room",
+    "outward_exits": 1,
+    "beasts": [
+      {
+        "count": "1d8",
+        "rank": "High-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 9,
+    "roll_max": 9,
+    "room_id": "room_9",
+    "name": "Long Hallway",
+    "layout": "Long Hallway",
+    "outward_exits": 1,
+    "beasts": [
+      {
+        "count": "1d4",
+        "rank": "Mid-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 10,
+    "roll_max": 10,
+    "room_id": "room_10",
+    "name": "T Junction",
+    "layout": "T Junction",
+    "outward_exits": 2,
+    "beasts": [],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 11,
+    "roll_max": 11,
+    "room_id": "room_11",
+    "name": "Long Hallway",
+    "layout": "Long Hallway",
+    "outward_exits": 1,
+    "beasts": [],
+    "treasure": [],
+    "starmetal": "3d12xRL",
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 12,
+    "roll_max": 12,
+    "room_id": "room_12",
+    "name": "Long Hallway",
+    "layout": "Long Hallway",
+    "outward_exits": 1,
+    "beasts": [],
+    "treasure": [],
+    "starmetal": "2d6xRL",
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 13,
+    "roll_max": 13,
+    "room_id": "room_13",
+    "name": "Long Hallway",
+    "layout": "Long Hallway",
+    "outward_exits": 1,
+    "beasts": [],
+    "treasure": [],
+    "starmetal": "2d4xRL",
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 14,
+    "roll_max": 14,
+    "room_id": "room_14",
+    "name": "Large Room",
+    "layout": "Large Room",
+    "outward_exits": 1,
+    "beasts": [
+      {
+        "count": "1d8",
+        "rank": "Low-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 15,
+    "roll_max": 15,
+    "room_id": "room_15",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [
+      {
+        "kind": "rift_item",
+        "quantity": 1
+      }
+    ],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 16,
+    "roll_max": 16,
+    "room_id": "room_16",
+    "name": "Long Hallway",
+    "layout": "Long Hallway",
+    "outward_exits": 1,
+    "beasts": [
+      {
+        "count": "1d4",
+        "rank": "Mid-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 17,
+    "roll_max": 17,
+    "room_id": "room_17",
+    "name": "T Junction",
+    "layout": "T Junction",
+    "outward_exits": 2,
+    "beasts": [],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 18,
+    "roll_max": 18,
+    "room_id": "room_18",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [
+      {
+        "count": "1d4",
+        "rank": "Low-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 19,
+    "roll_max": 19,
+    "room_id": "room_19",
+    "name": "T Junction",
+    "layout": "T Junction",
+    "outward_exits": 2,
+    "beasts": [
+      {
+        "count": "1d6",
+        "rank": "Low-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 20,
+    "roll_max": 20,
+    "room_id": "room_20",
+    "name": "Long Hallway",
+    "layout": "Long Hallway",
+    "outward_exits": 1,
+    "beasts": [],
+    "treasure": [],
+    "starmetal": "2d4xRL",
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 21,
+    "roll_max": 21,
+    "room_id": "room_21",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 22,
+    "roll_max": 22,
+    "room_id": "room_22",
+    "name": "T Junction",
+    "layout": "T Junction",
+    "outward_exits": 2,
+    "beasts": [
+      {
+        "count": "1d4",
+        "rank": "Low-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 23,
+    "roll_max": 23,
+    "room_id": "room_23",
+    "name": "Long Hallway",
+    "layout": "Long Hallway",
+    "outward_exits": 1,
+    "beasts": [
+      {
+        "count": "1d6",
+        "rank": "Low-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 24,
+    "roll_max": 24,
+    "room_id": "room_24",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [
+      {
+        "kind": "rift_item",
+        "quantity": 1
+      }
+    ],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 25,
+    "roll_max": 25,
+    "room_id": "room_25",
+    "name": "Large Room",
+    "layout": "Large Room",
+    "outward_exits": 1,
+    "beasts": [
+      {
+        "count": "1d4",
+        "rank": "High-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 26,
+    "roll_max": 26,
+    "room_id": "room_26",
+    "name": "Long Hallway",
+    "layout": "Long Hallway",
+    "outward_exits": 1,
+    "beasts": [
+      {
+        "count": "1d4",
+        "rank": "Mid-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": "3d4xRL",
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 27,
+    "roll_max": 27,
+    "room_id": "room_27",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [
+      {
+        "kind": "rift_item",
+        "quantity": 1
+      }
+    ],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 28,
+    "roll_max": 28,
+    "room_id": "room_28",
+    "name": "Long Hallway",
+    "layout": "Long Hallway",
+    "outward_exits": 1,
+    "beasts": [
+      {
+        "count": "1d6",
+        "rank": "Mid-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 29,
+    "roll_max": 29,
+    "room_id": "room_29",
+    "name": "T Junction",
+    "layout": "T Junction",
+    "outward_exits": 2,
+    "beasts": [
+      {
+        "count": "1d6",
+        "rank": "High-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 30,
+    "roll_max": 30,
+    "room_id": "room_30",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [
+      {
+        "count": "1d6",
+        "rank": "Mid-Rank"
+      }
+    ],
+    "treasure": [
+      {
+        "kind": "chest",
+        "rarity": "Rare",
+        "quantity": 1
+      }
+    ],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 31,
+    "roll_max": 31,
+    "room_id": "room_31",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [
+      {
+        "count": "1d6",
+        "rank": "Mid-Rank"
+      }
+    ],
+    "treasure": [
+      {
+        "kind": "chest",
+        "rarity": "Rare",
+        "quantity": 1
+      }
+    ],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 32,
+    "roll_max": 32,
+    "room_id": "room_32",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [
+      {
+        "count": "1d10",
+        "rank": "Low-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 33,
+    "roll_max": 33,
+    "room_id": "room_33",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [
+      {
+        "count": "1d4",
+        "rank": "Mid-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 34,
+    "roll_max": 34,
+    "room_id": "room_34",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [
+      {
+        "count": "1d6",
+        "rank": "High-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 35,
+    "roll_max": 35,
+    "room_id": "room_35",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [
+      {
+        "count": "1d6",
+        "rank": "High-Rank"
+      }
+    ],
+    "treasure": [],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 36,
+    "roll_max": 36,
+    "room_id": "room_36",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [
+      {
+        "count": "1d10",
+        "rank": "Low-Rank"
+      }
+    ],
+    "treasure": [
+      {
+        "kind": "rift_item",
+        "quantity": 1
+      }
+    ],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 37,
+    "roll_max": 37,
+    "room_id": "room_37",
+    "name": "Dead End",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [
+      {
+        "count": "1d2",
+        "rank": "Tree-Rank"
+      }
+    ],
+    "treasure": [
+      {
+        "kind": "chest",
+        "rarity": "Epic",
+        "quantity": 1
+      }
+    ],
+    "starmetal": null,
+    "boss_guarded": false,
+    "room_feature": null
+  },
+  {
+    "roll_min": 38,
+    "roll_max": 38,
+    "room_id": "room_38",
+    "name": "Treasure Trove Room",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [
+      {
+        "kind": "chest",
+        "rarity": "Epic",
+        "quantity": 2
+      }
+    ],
+    "starmetal": "2d8xRL",
+    "boss_guarded": false,
+    "room_feature": "Treasure Trove Room"
+  },
+  {
+    "roll_min": 39,
+    "roll_max": 39,
+    "room_id": "room_39",
+    "name": "Treasure Trove Room",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [
+      {
+        "kind": "legendary_level_loot",
+        "quantity": 1
+      }
+    ],
+    "starmetal": "2d12xRL",
+    "boss_guarded": false,
+    "room_feature": "Treasure Trove Room"
+  },
+  {
+    "roll_min": 40,
+    "roll_max": 40,
+    "room_id": "room_40",
+    "name": "Treasure Trove Room",
+    "layout": "Dead End",
+    "outward_exits": 0,
+    "beasts": [],
+    "treasure": [
+      {
+        "kind": "legendary_level_loot",
+        "quantity": 1
+      }
+    ],
+    "starmetal": "3d20xRL",
+    "boss_guarded": false,
+    "room_feature": "Treasure Trove Room"
+  }
+]

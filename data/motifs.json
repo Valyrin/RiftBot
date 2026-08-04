@@ -1,0 +1,92 @@
+[
+  {
+    "motif_id": 2,
+    "name": "Roman Villa",
+    "effect_name": "Imperial Law",
+    "description": "Each battle you enter, roll a 1d8. 1: Nothing, 2: Cannot use physical force, 3: Cannot use Fire, Water, Flying, or Ground energy, 4: Cannot use Rock, Steel, Ghost, or Psionic Energy, 5: Cannot use Weapons, 6: Cannot use empowered forms, 7: Cannot use defensive skills, 8: Cannot use Grass, Fairy, Dark, or Dragon Energy."
+  },
+  {
+    "motif_id": 3,
+    "name": "Gigeresque Horror",
+    "effect_name": "Eldritch",
+    "description": "Sanity Mechanic. Start with 50 Sanity, each new room reduces sanity by 1d4. When Sanity hits 0, all enemies mutate and gain 30% extra Beast Level. Applies to the Boss."
+  },
+  {
+    "motif_id": 4,
+    "name": "Demon Lord Dungeon (Black and Gold Brick)",
+    "effect_name": "Demon Lord's Gaze",
+    "description": "When entering battle, roll 1d20. If you roll 1 or 2, you are being watched by the Demon Lord. Increase all enemies' Beast Level by 50%. Does not apply to bosses. Restricts Pokemon rolls to [Dark] types, Primary or Secondary."
+  },
+  {
+    "motif_id": 5,
+    "name": "Swampy Jungle",
+    "effect_name": "Toxic",
+    "description": "Snakes, Mosquitoes, and more. Roll 1d20 each new room. If you roll 1 or 2 a random target is bitten and poisoned. Restricts Pokemon rolls to [Poison], [Bug], or [Grass] types, Primary or Secondary."
+  },
+  {
+    "motif_id": 6,
+    "name": "Forest",
+    "effect_name": "Large",
+    "description": "Roll each exploration roll twice and take the option with branching paths. If you roll a treasure, ignore this. Every 10 rooms explored requires resting and food."
+  },
+  {
+    "motif_id": 7,
+    "name": "Cave",
+    "effect_name": "None",
+    "description": ""
+  },
+  {
+    "motif_id": 8,
+    "name": "Cave",
+    "effect_name": "None",
+    "description": ""
+  },
+  {
+    "motif_id": 9,
+    "name": "Cavern",
+    "effect_name": "Cold",
+    "description": "Must have a method to survive in the cold. Double stamina cost for everything."
+  },
+  {
+    "motif_id": 10,
+    "name": "Sky Islands",
+    "effect_name": "Flight",
+    "description": "Must fly between rooms. Hermes Bands can only fly 5 rooms before needing to recharge for a while. Restricts Pokemon rolls to [Flying] type, Primary or Secondary."
+  },
+  {
+    "motif_id": 11,
+    "name": "Glacier Mountain",
+    "effect_name": "Frigmotif_id",
+    "description": "Must have a method to survive the cold. Triple stamina cost for everything. Restricts Pokemon rolls to [Dragon] and [Ice] types, Primary or Secondary. Can only travel 5 rooms before starvation sets in due to extreme cold."
+  },
+  {
+    "motif_id": 12,
+    "name": "Underground Sea",
+    "effect_name": "Aquatic",
+    "description": "Must have a method of travelling on water. Restricts Pokemon rolls to [Water] type, Primary or Secondary."
+  },
+  {
+    "motif_id": 13,
+    "name": "Tropical Archipelago",
+    "effect_name": "Aquatic",
+    "description": "Must have a method of travelling on water. Stamina restores quickly when resting. Roll 1d20 when entering a room (not a hallway); on 16+ find a Sitrus Berry that fully restores Health in a Rift, and there are no Beasts in the room even if there normally would be."
+  },
+  {
+    "motif_id": 14,
+    "name": "Wooden Mansion",
+    "effect_name": "Cryptgaze",
+    "description": "Ghosts haunt the mansion. Roll 1d20 when entering a room (not a hallway); on a 1 immediately enter battle with a random Ghost-type Beast. Restricts Pokemon rolls to [Ghost] type, Primary or Secondary."
+  },
+  {
+    "motif_id": 15,
+    "name": "Volcanic Cavern",
+    "effect_name": "Superheated",
+    "description": "Must have a method to survive the heat. Triple stamina cost for everything. Restricts Pokemon rolls to [Fire], [Ground], or [Rock] types, Primary or Secondary. Can only travel 5 rooms before dehydration sets in due to extreme heat."
+  },
+  {
+    "motif_id": 16,
+    "name": "Faewild",
+    "effect_name": "???",
+    "description": ""
+  }
+]
