@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterable
 
 if TYPE_CHECKING:
-    from .models import GeneratedDungeon, GeneratedRoom
+    from .loot import ClearResult
+    from .models import GeneratedDungeon, GeneratedRoom, RiftListing
+    from .navigation import TravelResult
 
 
 ROOM_STATE_SYMBOLS = {
@@ -324,18 +326,58 @@ def render_dungeon_map(
     return "\n".join(lines)
 
 
-def print_dungeon_map(
-    dungeon: GeneratedDungeon,
-    *,
-    show_unknown_rooms: bool = True,
-    show_states: bool = True,
-) -> None:
-    """Print the generated dungeon map to the console."""
+def render_rift_listings(listings: Iterable[RiftListing]) -> str:
+    """Render Rift listings for a console or message-based interface."""
 
-    print(
-        render_dungeon_map(
-            dungeon,
-            show_unknown_rooms=show_unknown_rooms,
-            show_states=show_states,
+    lines = ["Generated Rifts:"]
+    for listing in listings:
+        lines.append(
+            f"- {listing.rift_id}: {listing.rift_level} "
+            f"{listing.motif.name}, {listing.owner_display}"
         )
+    return "\n".join(lines)
+
+
+def render_claim_summary(
+    rift: RiftListing,
+    dungeon: GeneratedDungeon,
+) -> str:
+    """Render the result of claiming and generating a Rift."""
+
+    return (
+        f"Claimed {rift.rift_id}; generated {len(dungeon.rooms)} rooms."
     )
+
+
+def render_room_states(dungeon: GeneratedDungeon) -> str:
+    """Render the current state of every generated room."""
+
+    from .navigation import room_state
+
+    lines = ["Room states:"]
+    lines.extend(
+        f"- Room {room_id}: {room_state(dungeon, room_id).value}"
+        for room_id in dungeon.rooms
+    )
+    return "\n".join(lines)
+
+
+def render_clear_result(result: ClearResult) -> str:
+    """Render rewards acquired by clearing a room."""
+
+    return (
+        f"Cleared room {result.room_id}: +{result.dust_added} Dust, "
+        f"+{result.starmetal_added} SM."
+    )
+
+
+def render_travel_result(result: TravelResult) -> str:
+    """Render travel and any Starmetal acquired by an automatic clear."""
+
+    lines = [f"Travelled to room {result.current_room_id}."]
+    if result.auto_cleared and result.starmetal_acquired:
+        lines.append(
+            f"Cleared room {result.current_room_id}: "
+            f"+{result.starmetal_acquired} SM."
+        )
+    return "\n".join(lines)

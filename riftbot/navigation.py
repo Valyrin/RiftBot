@@ -53,6 +53,7 @@ class TravelResult:
     current_room_id: int
     first_visit: bool
     auto_cleared: bool
+    starmetal_acquired: int
     boss_lock_triggered: bool
 
 
@@ -90,13 +91,17 @@ def travel_to_room(
         boss_lock = True
 
     auto_cleared = False
+    starmetal_acquired = 0
     if not room.beasts:
-        auto_cleared = clear_room(dungeon, room_id).newly_cleared
+        clear_result = clear_room(dungeon, room_id)
+        auto_cleared = clear_result.newly_cleared
+        starmetal_acquired = clear_result.starmetal_added
 
     return TravelResult(
         previous_room_id=previous,
         current_room_id=room_id,
         first_visit=first_visit,
         auto_cleared=auto_cleared,
+        starmetal_acquired=starmetal_acquired,
         boss_lock_triggered=boss_lock,
     )

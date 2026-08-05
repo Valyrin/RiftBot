@@ -79,9 +79,14 @@ def load_rooms(path: str | Path) -> list[RoomDefinition]:
             height=int(row.get("height", 3)),
             outward_exits=int(row["outward_exits"]),
             beast_budget=int(row.get("beast_budget", 0)),
-            starmetal=str(row.get("starmetal", 0)),
+            starmetal=row.get("starmetal"),
             relic=float(row.get("relic", 0)),
             boss=bool(row.get("boss", False)),
+            beasts=tuple(dict(spec) for spec in row.get("beasts", [])),
+            treasure=tuple(
+                dict(spec) for spec in row.get("treasure", [])
+            ),
+            boss_guarded=bool(row.get("boss_guarded", False)),
         )
         for row in _load_json(path)
     ]

@@ -5,6 +5,15 @@ from dataclasses import dataclass
 from .models import GeneratedDungeon, Relic
 
 
+RELIC_VALUE_BY_RARITY: dict[str, int] = {
+    "Common": 1,
+    "Uncommon": 2,
+    "Rare": 3,
+    "Epic": 4,
+    "Legendary": 5
+}
+
+
 @dataclass(frozen=True)
 class ClearResult:
     room_id: int
@@ -67,6 +76,6 @@ def render_ledger(dungeon: GeneratedDungeon) -> str:
     else:
         for relic in dungeon.ledger.relics:
             lines.append(
-                f"- **{relic.name}** — {relic.rarity}, Level {relic.level}"
+                f"- **{relic.name}** — {relic.rarity}, Level {relic.level}, {RELIC_VALUE_BY_RARITY[relic.rarity] * relic.level} CE"
             )
     return "\n".join(lines)

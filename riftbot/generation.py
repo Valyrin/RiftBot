@@ -73,6 +73,21 @@ RIFT_LEVEL_VALUES: dict[str, int] = {
     "SS": 8,
 }
 
+RELIC_RARITY_LEVELS: dict[str, int] = {
+    "Common": 1,
+    "Uncommon": 2,
+    "Rare": 3,
+    "Epic": 4,
+    "Legendary": 5,
+}
+
+NON_BOSS_RELIC_RARITY_WEIGHTS: dict[str, int] = {
+    "Common": 50,
+    "Uncommon": 30,
+    "Rare": 15,
+    "Epic": 5,
+}
+
 COMPANY_OWNER_BY_ROLL: dict[int, str] = {
     2: "Lionsoft Industries",
     3: "Platinum Threads",
@@ -176,7 +191,7 @@ def roll_starmetal(
 ) -> int:
     """Return zero for null, otherwise evaluate an ``XdYxRL`` formula."""
 
-    if formula is None or 'None':
+    if formula is None:
         return 0
 
     normalized = formula.replace(" ", "").upper()
@@ -232,6 +247,24 @@ def _motif_for_roll(
     raise LookupError(
         f"No motif entry covers 2d8 roll {motif_roll}."
     )
+
+
+RIFT_REGIONS: tuple[str, ...] = (
+    "Moon Hammer",
+    "Lightclaw",
+    "Hoenn",
+    "Alola",
+    "Horona",
+)
+
+
+def roll_regional_rift_counts(rng: Random) -> dict[str, int]:
+    """Roll each region's additional Rift count using max(0, 1d4 - 1)."""
+
+    return {
+        region: max(0, rng.randint(1, 4) - 1)
+        for region in RIFT_REGIONS
+    }
 
 
 def generate_daily_rifts(
@@ -307,6 +340,37 @@ def generate_daily_rifts(
             OwnershipType.COMPANY,
             roll_company_owner(rng),
         )
+
+    # Regional Rifts are an additional batch. Each region independently
+    # contributes 0-3 Rifts after normal ownership has been assigned.
+    region_counts = roll_regional_rift_counts(rng)
+    for region, region_count in region_counts.items():
+        region_slug = region.casefold().replace(" ", "-")
+        for region_index in range(region_count):
+            level_roll = roll_dice(rng, 2, 20)
+            motif_roll = roll_dice(rng, 2, 8)
+            listing_index = len(listings)
+            listings.append(
+                RiftListing(
+                    rift_id=(
+                        f"{generated_at.date().isoformat()}-"
+                        f"{region_slug}-{region_index + 1}"
+                    ),
+                    generated_at=generated_at,
+                    expires_at=generated_at + timedelta(days=7),
+                    level_roll=level_roll,
+                    rift_level=RIFT_LEVEL_BY_ROLL[level_roll],
+                    motif_roll=motif_roll,
+                    motif=_motif_for_roll(motifs, motif_roll),
+                    ownership=RiftOwnership(
+                        OwnershipType.REGIONAL,
+                        region,
+                    ),
+                    seed=Random(
+                        f"{actual_seed}:{listing_index}"
+                    ).getrandbits(63),
+                )
+            )
 
     return listings
 
@@ -390,7 +454,7 @@ def _beast_specs(
     if value is None:
         return []
 
-    if not isinstance(value, list):
+    if not isinstance(value, (list, tuple)):
         raise ValueError(
             f"Room {_room_name(definition)!r} has invalid beasts data."
         )
@@ -444,7 +508,7 @@ def _treasure_specs(
     value = _field(definition, "treasure", [])
     if value is None:
         return []
-    if not isinstance(value, list):
+    if not isinstance(value, (list, tuple)):
         raise ValueError("Room treasure must be a list.")
     return [dict(item) for item in value]
 
@@ -680,31 +744,41 @@ def _relic_from_spec(
     *,
     motif: RiftMotif,
     rift_level_value: int,
+    rng: Random,
+    is_boss_room: bool,
 ) -> list[Relic]:
     quantity = max(1, int(spec.get("quantity", 1)))
     kind = str(spec.get("kind", "")).casefold()
 
     if kind == "chest":
-        rarity = str(spec.get("rarity", "Common"))
         name = f"{motif.name} Relic"
     elif kind == "rift_item":
-        rarity = "Rift Item"
-        name = f"{motif.name} Rift Item"
+        name = f"{motif.name} Relic"
     elif kind == "legendary_level_loot":
-        rarity = "Legendary"
-        name = f"Legendary {motif.name} Relic"
+        name = f"{motif.name} Relic"
     else:
         return []
 
-    return [
-        Relic(
+    relics: list[Relic] = []
+    for _ in range(quantity):
+        if is_boss_room:
+            rarity = "Legendary"
+        else:
+            rarity = rng.choices(
+                tuple(NON_BOSS_RELIC_RARITY_WEIGHTS),
+                weights=tuple(NON_BOSS_RELIC_RARITY_WEIGHTS.values()),
+                k=1,
+            )[0]
+        relics.append(Relic(
             relic_id=str(uuid4()),
             name=name,
             rarity=rarity,
             level=rift_level_value,
-        )
-        for _ in range(quantity)
-    ]
+            creation_energy=(
+                rift_level_value * RELIC_RARITY_LEVELS[rarity]
+            ),
+        ))
+    return relics
 
 
 def generate_room_treasure(
@@ -713,6 +787,7 @@ def generate_room_treasure(
     motif: RiftMotif,
     rift_level_value: int,
     rng: Random,
+    is_boss_room: bool = False,
 ) -> RoomTreasure:
     starmetal = roll_starmetal(
         _starmetal_formula(definition),
@@ -727,6 +802,8 @@ def generate_room_treasure(
                 spec,
                 motif=motif,
                 rift_level_value=rift_level_value,
+                rng=rng,
+                is_boss_room=is_boss_room,
             )
         )
 
@@ -933,13 +1010,27 @@ def generate_dungeon(
                     ),
                 )
             )
-        print(raw_definition)
         room.treasure = generate_room_treasure(
             raw_definition,
             motif=rift.motif,
             rift_level_value=rift_level_value,
             rng=rng,
+            is_boss_room=room.is_boss_room,
         )
+
+        if room.is_boss_room and not any(
+            relic.rarity == "Legendary"
+            for relic in room.treasure.relics
+        ):
+            room.treasure.relics.extend(
+                _relic_from_spec(
+                    {"kind": "legendary_level_loot", "quantity": 1},
+                    motif=rift.motif,
+                    rift_level_value=rift_level_value,
+                    rng=rng,
+                    is_boss_room=True,
+                )
+            )
 
     progress = {
         room_id: RoomProgress(room_id=room_id)

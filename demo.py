@@ -9,7 +9,14 @@ from riftbot.loot import clear_room, render_ledger
 from riftbot.navigation import room_state, travel_to_room
 from riftbot.repository import RiftRepository
 from riftbot.service import RiftService
-from riftbot.display import print_dungeon_map
+from riftbot.display import (
+    render_claim_summary,
+    render_clear_result,
+    render_dungeon_map,
+    render_rift_listings,
+    render_room_states,
+    render_travel_result,
+)
 
 import random
 
@@ -36,23 +43,15 @@ def main() -> None:
     for listing in listings:
         repository.save_rift(listing)
 
-    print("Generated Rifts:")
-    for listing in listings:
-        print(
-            f"- {listing.rift_id}: {listing.rift_level} "
-            f"{listing.motif.name}, {listing.owner_display}"
-        )
+    print(render_rift_listings(listings))
 
     target = listings[0]
     service = RiftService(repository, rooms, pokedex)
     rift, dungeon = service.claim_and_generate(target.rift_id, user_id=1001)
 
-    print(f"\nClaimed {rift.rift_id}; generated {len(dungeon.rooms)} rooms.")
-    print("Room states:")
-    for room_id in dungeon.rooms:
-        print(f"- Room {room_id}: {room_state(dungeon, room_id).value}")
-    
-    print_dungeon_map(dungeon)
+    print("\n" + render_claim_summary(rift, dungeon))
+    print(render_room_states(dungeon))
+    print(render_dungeon_map(dungeon))
 
     # Demonstration exploration: repeatedly choose a Seen room and clear it.
     safety = 0
@@ -68,23 +67,17 @@ def main() -> None:
             current = dungeon.navigation.current_room_id
             if dungeon.rooms[current].beasts:
                 result = clear_room(dungeon, current)
-                print(
-                    f"Cleared room {current}: +{result.dust_added} Dust, "
-                    f"+{result.starmetal_added} SM."
-                )
+                print(render_clear_result(result))
             else:
                 break
             continue
 
         destination = seen[0]
         result = travel_to_room(dungeon, destination)
-        print(f"Travelled to room {destination}.")
+        print(render_travel_result(result))
         if dungeon.rooms[destination].beasts:
             clear_result = clear_room(dungeon, destination)
-            print(
-                f"Cleared room {destination}: +{clear_result.dust_added} Dust, "
-                f"+{clear_result.starmetal_added} SM."
-            )
+            print(render_clear_result(clear_result))
 
         if destination == dungeon.boss_room_id:
             break

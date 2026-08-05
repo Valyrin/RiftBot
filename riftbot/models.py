@@ -20,6 +20,7 @@ class OwnershipType(StrEnum):
     INDEPENDENT = "independent"
     COMPANY = "company"
     COUNCIL_ASSIGNED = "council_assigned"
+    REGIONAL = "regional"
 
 
 class RoomState(StrEnum):
@@ -110,6 +111,7 @@ class Relic:
     name: str
     rarity: str
     level: int
+    creation_energy: int
 
 
 @dataclass(slots=True)
@@ -128,9 +130,12 @@ class RoomDefinition:
     height: int
     outward_exits: int
     beast_budget: int
-    starmetal: int
+    starmetal: str | None
     relic: float
     boss: bool = False
+    beasts: tuple[dict[str, str], ...] = ()
+    treasure: tuple[dict[str, Any], ...] = ()
+    boss_guarded: bool = False
 
 
 @dataclass(slots=True)
@@ -217,4 +222,6 @@ class RiftListing:
             return self.ownership.owner_name or "Unknown Company"
         if self.ownership.ownership_type is OwnershipType.COUNCIL_ASSIGNED:
             return "Council Assigned"
+        if self.ownership.ownership_type is OwnershipType.REGIONAL:
+            return self.ownership.owner_name or "Unknown Region"
         return "Independent"
