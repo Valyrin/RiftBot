@@ -28,11 +28,14 @@ def main() -> None:
     motifs = load_motifs(BASE / "data" / "motifs.json")
     pokedex = load_pokedex(BASE / "data" / "pokedex.json")
     rooms = load_rooms(BASE / "data" / "rooms.json")
-
     db_path = BASE / "demo.sqlite3"
+
     if db_path.exists():
         db_path.unlink()
 
+    repository = RiftRepository(db_path)
+
+    db_path = BASE / "demo.sqlite3"
     repository = RiftRepository(db_path)
     listings = generate_daily_rifts(
         motifs,
@@ -44,6 +47,30 @@ def main() -> None:
         repository.save_rift(listing)
 
     print(render_rift_listings(listings))
+
+    print(
+        "\n" + render_rift_listings(
+            repository.list_active_rifts(),
+            heading="All Active Rifts:",
+        )
+    )
+    regional_listing = next(
+        (
+            listing for listing in listings
+            if listing.owner in {
+                "Moon Hammer", "Lightclaw", "Hoenn", "Alola", "Horona"
+            }
+        ),
+        None,
+    )
+    if regional_listing is not None:
+        region = regional_listing.owner
+        print(
+            "\n" + render_rift_listings(
+                repository.list_active_rifts(region=region),
+                heading=f"Active {region} Rifts:",
+            )
+        )
 
     target = listings[0]
     service = RiftService(repository, rooms, pokedex)

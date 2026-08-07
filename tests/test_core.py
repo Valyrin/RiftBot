@@ -15,7 +15,7 @@ from riftbot.generation import (
     roll_regional_rift_counts,
 )
 from riftbot.loot import clear_room
-from riftbot.models import OwnershipType, RiftStatus, RoomState
+from riftbot.models import RiftStatus, RoomState
 from riftbot.navigation import room_state, travel_to_room
 from riftbot.repository import RiftRepository
 
@@ -50,6 +50,62 @@ def test_available_only_expiration(tmp_path):
     assert repository.get_rift(rifts[1].rift_id).status is RiftStatus.GENERATING
 
 
+def test_repository_assigns_growing_numeric_rift_ids(tmp_path):
+    motifs, _, _ = data()
+    repository = RiftRepository(tmp_path / "ids.sqlite3")
+    first_batch = generate_daily_rifts(motifs, seed=21, count=1)
+    second_batch = generate_daily_rifts(motifs, seed=22, count=1)
+
+    for rift in first_batch + second_batch:
+        repository.save_rift(rift)
+
+    ids = [int(rift.rift_id) for rift in first_batch + second_batch]
+    assert ids == list(range(1, len(ids) + 1))
+
+
+def test_list_active_rifts_filters_region_owner_and_status(tmp_path):
+    motifs, _, _ = data()
+    repository = RiftRepository(tmp_path / "active.sqlite3")
+    rifts = generate_daily_rifts(motifs, seed=8, count=2)
+    for rift in rifts:
+        repository.save_rift(rift)
+
+    regional = next(
+        rift for rift in rifts
+        if rift.owner in {
+            "Moon Hammer", "Lightclaw", "Hoenn", "Alola", "Horona"
+        }
+    )
+    standard = rifts[0]
+    rifts[1].status = RiftStatus.COMPLETED
+    repository.save_rift(rifts[1])
+
+    active = repository.list_active_rifts()
+    by_region = repository.list_active_rifts(
+        region=regional.owner.lower()
+    )
+    by_owner = repository.list_active_rifts(
+        owner=standard.owner.upper()
+    )
+
+    assert rifts[1] not in active
+    assert by_region
+    assert all(rift.owner == regional.owner for rift in by_region)
+    assert standard in by_owner
+    assert all(rift.owner == standard.owner for rift in by_owner)
+
+    with repository.connection() as db:
+        stored_owner = db.execute(
+            "SELECT owner FROM rifts WHERE rift_id = ?",
+            (regional.rift_id,),
+        ).fetchone()["owner"]
+        indexes = {
+            row["name"] for row in db.execute("PRAGMA index_list(rifts)")
+        }
+    assert stored_owner == regional.owner
+    assert "idx_rifts_status_owner" in indexes
+
+
 def test_regional_rift_counts_roll_independently_from_zero_to_three():
     counts = roll_regional_rift_counts(Random(7))
     values = list(counts.values())
@@ -67,19 +123,36 @@ def test_regional_rifts_are_added_after_standard_rifts():
 
     assert regional
     assert all(
-        rift.ownership.ownership_type is OwnershipType.REGIONAL
-        for rift in regional
-    )
-    assert all(
-        rift.ownership.owner_name in {
+        rift.owner in {
             "Moon Hammer", "Lightclaw", "Hoenn", "Alola", "Horona"
         }
         for rift in regional
     )
     assert all(
-        rift.ownership.ownership_type is not OwnershipType.REGIONAL
+        rift.owner not in {
+            "Moon Hammer", "Lightclaw", "Hoenn", "Alola", "Horona"
+        }
         for rift in rifts[:standard_count]
     )
+
+
+def test_council_assignment_is_limited_to_city_rifts():
+    motifs, _, _ = data()
+    regions = {"Moon Hammer", "Lightclaw", "Hoenn", "Alola", "Horona"}
+
+    for seed in range(1, 101):
+        city_count = 3
+        rifts = generate_daily_rifts(motifs, seed=seed, count=city_count)
+        city_rifts = rifts[:city_count]
+        regional_rifts = rifts[city_count:]
+
+        assert all(rift.owner != "Council Assigned" for rift in regional_rifts)
+        assert all(rift.owner in regions for rift in regional_rifts)
+        assert all(
+            rift.owner == "Council Assigned"
+            for rift in city_rifts
+            if rift.rift_level in {"S", "SS"}
+        )
 
 
 def test_dungeon_generation_and_room_states():

@@ -16,6 +16,7 @@ class RiftStatus(StrEnum):
     EXPIRED = "expired"
 
 
+# Retained only so repositories can migrate payloads pickled by older builds.
 class OwnershipType(StrEnum):
     INDEPENDENT = "independent"
     COMPANY = "company"
@@ -67,6 +68,8 @@ class ParadoxRule(StrEnum):
 
 @dataclass(frozen=True, slots=True)
 class RiftOwnership:
+    """Legacy payload type; new code stores RiftListing.owner directly."""
+
     ownership_type: OwnershipType
     owner_name: str | None = None
 
@@ -208,20 +211,11 @@ class RiftListing:
     rift_level: str
     motif_roll: int
     motif: RiftMotif
-    ownership: RiftOwnership
+    owner: str
     seed: int
     status: RiftStatus = RiftStatus.AVAILABLE
     claimed_by_user_id: int | None = None
     claimed_at: datetime | None = None
     dungeon_id: str | None = None
     thread_id: int | None = None
-
-    @property
-    def owner_display(self) -> str:
-        if self.ownership.ownership_type is OwnershipType.COMPANY:
-            return self.ownership.owner_name or "Unknown Company"
-        if self.ownership.ownership_type is OwnershipType.COUNCIL_ASSIGNED:
-            return "Council Assigned"
-        if self.ownership.ownership_type is OwnershipType.REGIONAL:
-            return self.ownership.owner_name or "Unknown Region"
-        return "Independent"
+    ownership: RiftOwnership | None = None

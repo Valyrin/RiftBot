@@ -12,14 +12,12 @@ from .models import (
     GeneratedDungeon,
     GeneratedRoom,
     NavigationState,
-    OwnershipType,
     ParadoxRule,
     PokedexEntry,
     Relic,
     RiftListing,
     RiftLootLedger,
     RiftMotif,
-    RiftOwnership,
     RoomDefinition,
     RoomProgress,
     RoomTreasure,
@@ -298,25 +296,22 @@ def generate_daily_rifts(
         rift_level = RIFT_LEVEL_BY_ROLL[level_roll]
         motif = _motif_for_roll(motifs, motif_roll)
 
-        ownership = (
-            RiftOwnership(
-                OwnershipType.COUNCIL_ASSIGNED,
-                "Council",
-            )
+        owner = (
+            "Council Assigned"
             if rift_level in {"S", "SS"}
-            else RiftOwnership(OwnershipType.INDEPENDENT)
+            else "Independent"
         )
 
         listings.append(
             RiftListing(
-                rift_id=f"{generated_at.date().isoformat()}-{index + 1}",
+                rift_id=f"pending:{actual_seed}:standard:{index}",
                 generated_at=generated_at,
                 expires_at=generated_at + timedelta(days=7),
                 level_roll=level_roll,
                 rift_level=rift_level,
                 motif_roll=motif_roll,
                 motif=motif,
-                ownership=ownership,
+                owner=owner,
                 seed=Random(f"{actual_seed}:{index}").getrandbits(63),
             )
         )
@@ -336,16 +331,12 @@ def generate_daily_rifts(
     )
 
     for listing in eligible[:purchase_count]:
-        listing.ownership = RiftOwnership(
-            OwnershipType.COMPANY,
-            roll_company_owner(rng),
-        )
+        listing.owner = roll_company_owner(rng)
 
     # Regional Rifts are an additional batch. Each region independently
     # contributes 0-3 Rifts after normal ownership has been assigned.
     region_counts = roll_regional_rift_counts(rng)
     for region, region_count in region_counts.items():
-        region_slug = region.casefold().replace(" ", "-")
         for region_index in range(region_count):
             level_roll = roll_dice(rng, 2, 20)
             motif_roll = roll_dice(rng, 2, 8)
@@ -353,8 +344,7 @@ def generate_daily_rifts(
             listings.append(
                 RiftListing(
                     rift_id=(
-                        f"{generated_at.date().isoformat()}-"
-                        f"{region_slug}-{region_index + 1}"
+                        f"pending:{actual_seed}:{region}:{region_index}"
                     ),
                     generated_at=generated_at,
                     expires_at=generated_at + timedelta(days=7),
@@ -362,10 +352,7 @@ def generate_daily_rifts(
                     rift_level=RIFT_LEVEL_BY_ROLL[level_roll],
                     motif_roll=motif_roll,
                     motif=_motif_for_roll(motifs, motif_roll),
-                    ownership=RiftOwnership(
-                        OwnershipType.REGIONAL,
-                        region,
-                    ),
+                    owner=region,
                     seed=Random(
                         f"{actual_seed}:{listing_index}"
                     ).getrandbits(63),

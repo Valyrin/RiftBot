@@ -326,14 +326,18 @@ def render_dungeon_map(
     return "\n".join(lines)
 
 
-def render_rift_listings(listings: Iterable[RiftListing]) -> str:
+def render_rift_listings(
+    listings: Iterable[RiftListing],
+    *,
+    heading: str = "Generated Rifts:",
+) -> str:
     """Render Rift listings for a console or message-based interface."""
 
-    lines = ["Generated Rifts:"]
+    lines = [heading]
     for listing in listings:
         lines.append(
-            f"- {listing.rift_id}: {listing.rift_level} "
-            f"{listing.motif.name}, {listing.owner_display}"
+            f"{listing.rift_id}: Class {listing.rift_level} "
+            f"{listing.motif.name} - {listing.owner}"
         )
     return "\n".join(lines)
 

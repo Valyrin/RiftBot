@@ -24,8 +24,8 @@ class ScheduleSettings:
 class DailyRiftScheduler:
     """Small restart-safe scheduler.
 
-    Call `run()` as an asyncio task. Daily generation is idempotent if the repository
-    already contains the generated Rift IDs for the date.
+    Call `run()` as an asyncio task. Daily generation is idempotent if the
+    repository already contains Rifts generated on that date.
     """
 
     def __init__(
@@ -52,11 +52,11 @@ class DailyRiftScheduler:
             )
 
             if due and self._last_date != local.date():
-                for rift in generate_daily_rifts(
-                    self.motifs,
-                    now=now,
-                ):
-                    if self.repository.get_rift(rift.rift_id) is None:
+                if not self.repository.has_generated_rifts_on(now.date()):
+                    for rift in generate_daily_rifts(
+                        self.motifs,
+                        now=now,
+                    ):
                         self.repository.save_rift(rift)
                 self._last_date = local.date()
 
